@@ -12,5 +12,20 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('Auth/login');
 });
+Auth::routes();
+Route::get('/Admin', 'HomeController@index')->name('Panel');
+
+Route::resource('asignaturas','asignaturaController');
+Route::resource('ingreso','ingresoController');
+Route::resource('matricula','matriculaController');
+Route::resource('padres','padrescontroller');
+Route::resource('pagos','pagosController');
+
+
+
+
+
+
+
