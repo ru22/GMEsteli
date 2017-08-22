@@ -17,7 +17,7 @@ class pagosController extends Controller
      */
     public function index()
     {
-        
+        return view('vistas.pagos.index');
     }
 
     /**

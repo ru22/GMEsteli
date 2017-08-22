@@ -167,8 +167,6 @@
 
       <!-- AdminLTE App   -->
      <!-- {!!Html::script('plantilla/js/jQuery-2.1.4.min.js')!!} -->
-  
-
         <!-- tablas  -->
         {!!Html::script('tablas/jquery-3.2.1.min.js')!!}
         {!!Html::script('tablas/jquery.dataTables.min.js')!!}

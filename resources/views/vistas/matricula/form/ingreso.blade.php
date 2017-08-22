@@ -2,24 +2,27 @@
 <section class="content">
     <div class="row">
         <section class="content container-fluid">
-          <div>
-          <!-- Nav tabs -->
-             <ul class="nav nav-tabs" role="tablist">
-                  <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Estudiante</a></li>
-                 <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Padres</a></li>
-                                   
-            </ul>
-
-            <!-- Tab panes -->
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
+                    <div class="form-group">
+                        <label>Estudiante:</label>
+                        <select name="idestudiantes" class="form-control selectpicker" data-live-search="true">
+                                 
+                        </select>
+                     </div>
+                   </div>
+                </div>  
+              <div>  
+            
             <div class="tab-content">
-              <div role="tabpanel" class="tab-pane active" id="home">  
+          
                 {!!Form::open(['route'=>'ingreso.store','method'=>'POST'])!!}
                 {{Form::Token()}}
                  <div class="row">
-                  <div class="panel panel-primary ">
-                   <div class="panel-body ">
-                     <div class="row">
-                          <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
+                     <div class="row container-fluid ">
+                     <div class="panel panel-primary ">
+                      <div class="panel-body ">
+                          <div class="col-lg-3 col-sm-3 col-md-3 col-xs-3">
                               <label>Nombres:</label>
                                 <div class="form-group">
                                   <input type="text" name="nombrese" class="form-control">
@@ -33,15 +36,12 @@
                                   <input type="text" name="procedencia" class="form-control">
                                </div>
                             </div>
-                            <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
+                            <div class="col-lg-3 col-sm-3 col-md-3 col-xs-3">
                               <label>Fecha:</label>
                                 <div class="form-group">
                                   <input name="fnac" type="text" class="form-control">
                                 </div>
-                                <label>Direccion:</label>
-                                <div class="form-group">
-                                  <input type="text" name="direccion" class="form-control">
-                                </div>
+                                
                                 <label>Sexo:</label>
                                   <div class="form-group">
                                     <select name="sexo" class="form-control">
@@ -49,22 +49,22 @@
                                         <option value="Femenino">Femenino</option>
                                     </select>
                                 </div>
-                            </div>
+                                <label>Direccion:</label>
+
+                                
+                          </div>
+                          <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <div class="form-group">
+                                      <input type="text" name="direccion" class="form-control">
+                                    </div>
+                                  </div>
+                                </div>
                       </div>              
                       </div>
-                    </div>
-                  </div> 
-                </div>
-              <div role="tabpanel" class="tab-pane" id="profile"><br>
-                <div class="row">
-                      
-
-                  <div class="panel panel-primary ">
-                   <div class="panel-body ">   
-
-               
-
-                    <div class="row">                     
+                 
+                    <div class="row">
+                                        
                     <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
                        
                         <label>Nombres:</label>
@@ -102,8 +102,7 @@
                     </div>
                      <button type="submit" class="btn btn-primary">guardar</button>
                      </div>
-                   </div>
-                  </div>
+                  
                   {!!Form::close()!!}
               </div>
             </div>

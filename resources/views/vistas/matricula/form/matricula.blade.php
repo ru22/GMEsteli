@@ -7,7 +7,7 @@
              <label>Estudiante:</label>
               <select name="idestudiantes" class="form-control selectpicker" data-live-search="true">
              @foreach($matriculas as $est)
-                  <option value="{{$est->id}}_{{$est->nombrese}}_{{$est->apellidose}}">{{$est->nombrese}}-{{$est->apellidose}}</option>
+                  <option value="{{$est->id}}">{{$est->nombrese}}-{{$est->apellidose}}</option>
               @endforeach
               </select>
           </div>
@@ -38,8 +38,8 @@
             <div class="form-group">
                 <label>Repitente:</label>
                 <select name="repitente" class="form-control" id="repitente">
-                      <option value="1">No</option>
-                      <option value="2">Si</option>
+                      <option value="No">No</option>
+                      <option value="Si">Si</option>
                 </select>
             </div> 
         </div>
@@ -66,10 +66,10 @@
       <div class="form-group">
         <label>Turno:</label>
           <select name="pidturno" id="pidturno" class="form-control selectpicker" data-live-search="true" >
-            <option value="1">Matutino</option>
-            <option value="2">Vespertino</option>
-            <option value="3">Nocturno</option>
-            <option value="4">Savatino</option>
+            <option value="Matutino">Matutino</option>
+            <option value="Vespertino">Vespertino</option>
+            <option value="Nocturno">Nocturno</option>
+            <option value="Savatino">Savatino</option>
           </select>
         </div>
       </div>
@@ -91,20 +91,20 @@
           <div class="form-group ">
               <label>Anio de curso:</label>
               <select name="pidanio_curso" class="form-control selectpicker" data-live-search="true" id="pidanio_curso">
-              <option value="1">1º-Nivel-Prescolar</option>
-              <option value="2">2º-Nivel-Prescolar</option>
-              <option value="3">3º-Nivel-Prescolar</option>
-              <option value="4">1º-Grado</option>
-              <option value="5">2º-Grado</option>
-              <option value="6">3º-Grado</option>
-              <option value="7">4º-Grado</option>
-              <option value="8">5º-Grado</option>
-              <option value="9">6º-Grado</option>
-              <option value="10">1º-Anio</option>
-              <option value="11">2º-Anio</option>
-              <option value="12">3º-Anio</option>
-              <option value="13">4º-Anio</option>
-              <option value="14">5º-Anio</option>
+              <option value="1º-Nivel-Prescolar">1º-Nivel-Prescolar</option>
+              <option value="2º-Nivel-Prescolar">2º-Nivel-Prescolar</option>
+              <option value="3º-Nivel-Prescolar">3º-Nivel-Prescolar</option>
+              <option value="1º-Grado">1º-Grado</option>
+              <option value="2º-Grado">2º-Grado</option>
+              <option value="3º-Grado">3º-Grado</option>
+              <option value="4º-Grado">4º-Grado</option>
+              <option value="5º-Grado">5º-Grado</option>
+              <option value="6º-Grado">6º-Grado</option>
+              <option value="1º-Anio">1º-Anio</option>
+              <option value="2º-Anio">2º-Anio</option>
+              <option value="3º-Anio">3º-Anio</option>
+              <option value="4º-Anio">4º-Anio</option>
+              <option value="5º-Anio">5º-Anio</option>
               </select>
            </div>
         </div>
@@ -113,10 +113,10 @@
           <div class="form-group">
               <label>Seccion:</label>
               <select name="pidseccion" class="form-control" id="pidseccion">
-                   <option value="1">A</option>
-                    <option value="2">B</option>
-                    <option value="2">C</option>
-                    <option value="2">D</option>
+                   <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
               </select>
            </div>
         </div>

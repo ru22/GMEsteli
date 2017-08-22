@@ -39,11 +39,6 @@ function agregarp(){
 	
 //*** fin de la funcion para agragar el pago a su detalle***/// 
 //*** funcion de pago ***/// 
-$(document).ready(function)(){
-	("#idatricula").click(){
-		$("#idmes").attr("disabled",false);
-		pidmes
-	});
 
-});
+
 //*** fin de funcion pago ***/// 
