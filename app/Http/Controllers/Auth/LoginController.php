@@ -21,7 +21,7 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login.
+     * Where to redirect users after login. 
      *
      * @var string
      */
@@ -36,4 +36,33 @@ class LoginController extends Controller
     {
         $this->middleware('guest', ['except' => 'logout']);
     }
+ 
+     public function redirectPath()
+    {
+        if (auth()->user()->tipo !=1 && auth()->user()->tipo !=3){
+
+           return '/calificaciones';
+
+        }elseif(auth()->user()->tipo !==1 && auth()->user()->tipo !=2){
+
+            return '/perfil'; 
+
+        }else{
+
+            return '/Admin'; 
+        }
+        
+    }
+
+     public function authenticated()
+    {
+        // $user = auth()->user();
+
+        // if (! $user->select_grados_id) { 
+        //     $user->select_grados_id =  $user->grados->first()->id;
+        //     $user->select_asignaturas_id = $user->grados->first()->id;
+        //     $user->save();
+             
+        // }
+    } 
 }

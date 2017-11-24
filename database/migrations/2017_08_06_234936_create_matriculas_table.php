@@ -15,10 +15,8 @@ class CreateMatriculasTable extends Migration
     {
         Schema::create('matriculas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('colegio_procedencia');
             $table->string('repitente');
             $table->integer('ultimo_anio_aprovado'); 
-            $table->string('fnac');
             $table->integer('idestudiantes')->unsigned();
             $table->foreign('idestudiantes')->references('id')->on('estudiantes');
 

@@ -1,6 +1,7 @@
+
 @extends('layouts.app')
 
-@section('content')
+@section('content') 
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -28,7 +29,7 @@
                             <label for="password" class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
+                                <input id="password" type="password" class="form-control pwd" name="password" required>
 
                                 @if ($errors->has('password'))
                                     <span class="help-block">

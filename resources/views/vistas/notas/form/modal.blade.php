@@ -1,0 +1,18 @@
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal-edit-{{$calificaciones->id}}">
+ {!!Form::model($calificaciones,['route'=>['notas.update',$calificaciones->id],'method'=>'PUT'])!!}
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content ">
+     <div class="modal-header modaledit col">
+        <button type="button" class="close " data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title "><span class="glyphicon glyphicon-edit"></span> Editar Nota</h4>
+      </div><br>
+
+    @include('vistas.notas.form.editar')
+      <div class="modal-footer">
+     <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar <span class="glyphicon glyphicon-floppy-remove"></span></button>
+     <button type="submit" class="btn btn-primary">Guardar <span class="glyphicon glyphicon-floppy-disk"></span></button>
+   </div>
+    </div>
+  </div>
+   {!!Form::close()!!}
+</div> 

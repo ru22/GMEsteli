@@ -17,4 +17,7 @@ class pagos extends Model
      public function detallepagos(){
         return $this ->hasMany(detallepagos::class);
     }
+     public function estudiantes(){
+        return $this->belongsTo('App\estudiantes');
+    }
 }

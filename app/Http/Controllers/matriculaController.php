@@ -8,45 +8,79 @@ use Illuminate\Support\Facades\Input;
 use App\Http\Requests;
 use App\estudiantes;
 use App\matriculas;
-use App\detallematricula;
-
+use App\maestros;
+use App\seccions;
+use App\anios;
+use App\asignaturas;
 use DB;
+use Session;
+
 
 class matriculaController extends Controller
 {
+     public function __construct() 
+    {  
+        // $this->middleware('auth');
+        // $this->middleware('admin', ['only'=> ['index']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct()
-    {
-      $this->middleware('auth'); 
-    }
+
     public function index()
     {
-         $matriculas=DB::table('matriculas as m') 
-         ->join('estudiantes as est', 'm.idestudiantes','=','est.id')
-        ->select('m.id','est.nombrese','est.apellidose','m.colegio_procedencia','m.repitente','m.ultimo_anio_aprovado','m.fnac')
-         ->orderBy('id','asc')
-         ->paginate(10);
-         // return ($matriculas);
-       
-        return view('vistas.matricula.matriculados',["matriculas"=>$matriculas]);
-    }
 
+         // $idannio=DB::table('anios')->select('idannios')->orderBy('idannios','Desc')->take(1)->get();
+         // dd($idannio[0]->idannios);
+
+        $matriculas=DB::table('estudiantes') 
+            ->join('matriculas', 'estudiantes.id','=','matriculas.idestudiantes')
+            ->join('anios', 'matriculas.idannios','=','anios.idannios') 
+            ->select('estudiantes.id','estudiantes.codigo','estudiantes.nombrese','estudiantes.apellidose')
+            ->where('estudiantes.matricula','M')
+            // ->where('anios.idannios','=',$idannio[0]->idannios)
+            ->orderBy('matriculas.idestudiantes','asc')
+            ->get();
+
+   
+        $seccion=DB::table('seccions as s')
+            ->select('s.id','s.seccion')
+            ->orderBy('id','asc')
+            ->get();
+
+           
+
+        $anios=DB::table('anios as a')
+            ->select('a.idannios','a.periodo') 
+            ->orderBy('idannios','asc')
+            ->get();
+
+        $grados=DB::table('grados as grados')
+            ->select('grados.id','grados.grado')
+            ->orderBy('id','asc')
+            ->get();
+         
+        return view('vistas.matricula.form.listamatricula',["grados"=>$grados,"anios"=>$anios,"seccion"=>$seccion,"matriculas"=>$matriculas]);
+        // "lista"=>$lista,
+    }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function actualizar($id){
+        $estudiantes=estudiantes::findOrFail($id);
+        $estudiantes->matricula="M";
+        $estudiantes->save();
+    }
+    
     public function create()
     {
-       $matriculas=DB::table('estudiantes as est') 
-        ->select('est.id','est.nombrese','est.apellidose')
-        ->orderBy('id','asc')
-         ->get();
-        return view('vistas.matricula.creat',["matriculas"=>$matriculas]);
+       
     }
 
     /**
@@ -54,50 +88,43 @@ class matriculaController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {     
+     */ 
+    public function store(Request $request)  
+    { 
         try {
-            DB::beginTransaction();
+            DB::beginTransaction();  
+
+            $edad = $request->get('edad');
+           
             $matriculas = new matriculas;
-            $matriculas->idestudiantes=$request->get('idestudiantes');
-            $matriculas->colegio_procedencia=$request->get('procedencia');
+            $matriculas->idestudiantes=$request->get('idestudiantes'); 
+            $matriculas->tuno=$request->get('pidturno'); 
+            $matriculas->idannios=$request->get('pidperiodo');
+            $matriculas->idgrados=$request->get('pidanio');
             $matriculas->repitente=$request->get('repitente');
-            $matriculas->ultimo_anio_aprovado=$request->get('anioaprobado');
-            $matriculas->fnac=$request->get('fnac');
+            $matriculas->repitente=$request->get('repitente');
+            $matriculas->annio_curso=$request->get('anioaprobado');
 
-            $estudiante= DB::table('matriculas')->where('idestudiantes',$matriculas->idestudiantes)->value('id');
-
-             if($estudiante){
-                //si el  estudiante ya tiene una id matricula cambiar la id de esta matricula por existente
-                $matriculas->id=$estudiante;
-             }
-             else
-             {
-            //sino crear una nueva
-                $matriculas->save();
-             }
-
-            $detalle = new detallematricula();
-            $detalle->matriculas_id= $matriculas->id;
-            $detalle->tuno=$request->get('pidturno');
-            $detalle->anio_electivo=$request->get('pidanio_electivo');
-            $detalle->anio_curso=$request->get('pidanio_curso');
-            $detalle->seccion=$request->get('pidseccion');
-          
-
-            $detalle->save();
-    
-           DB::commit();
-              
+            if ($edad >= 9 && $edad <=15){
+                $matriculas->idseccion=('1');
+                $matriculas->save(); 
+              }elseif ($edad >= 4 && $edad <30) {
+                $matriculas->idseccion=('1');
+                $matriculas->save(); 
+              }
+            
+           $this->actualizar($request->get('idestudiantes'));
+         
+        DB::commit();
+               
           }catch (Exception $e)
-          {
-              DB::rollback();
+         {
+               DB::rollback();
           }
 
-      
-         return ('guardar');
+      return Redirect::to('ingreso');
     }
+ 
 
     /**
      * Display the specified resource.
@@ -105,24 +132,39 @@ class matriculaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id) 
     {
-        $matriculas=DB::table('matriculas as m') 
-         ->join('estudiantes as est', 'm.idestudiantes','=','est.id')
-        ->select('m.id','est.nombrese','est.apellidose','m.colegio_procedencia','m.repitente','m.ultimo_anio_aprovado','m.fnac')
-         ->where('m.id','=',$id)
-        ->first();
+        $matriculas=DB::table('matriculas as matriculas')
+            ->join('estudiantes','matriculas.idestudiantes','=','estudiantes.id')
+            ->join('seccions as sec', 'sec.id','=','matriculas.idseccion')
+            ->join('anios as annio', 'matriculas.idannios','=','annio.idannios')          
+            ->join('grados', 'grados.id','=','matriculas.idgrados')
+            ->select('matriculas.id','matriculas.tuno','estudiantes.codigo','sec.seccion','annio.periodo','grados.grado','grados.id')
+            ->where('estudiantes.id','=',$id)
+            ->get();
 
+            $asignaturas=DB::table('asignaturas')
+            ->select('asignaturas.nombre')
+            ->where('asignaturas.id','=',$matriculas[0]->id)
+            ->get();
 
-         $detalle=DB::table('detallematriculas as detalle')
-         ->select('detalle.id','detalle.tuno','detalle.anio_electivo','detalle.anio_curso','detalle.seccion')
-         ->orderBy('id','asc')
-         ->where('detalle.matriculas_id','=',$id)
-         ->get();
-        
-         return view('vistas.matricula.detalles',["matriculas"=>$matriculas,"detalle"=>$detalle]);
-        
+            
+             // dd($asignaturas,  $matriculas);
+            
+         return view('vistas.matricula.detalles',["matriculas"=>$matriculas,"asignaturas"=>$asignaturas]);
+    }
 
+    public function perfil($id){
+
+        $estudiantes=DB::table('estudiantes') 
+
+            ->join('padres','estudiantes.padres_id','=','padres.id')
+            ->select('estudiantes.codigo','estudiantes.nombrese','estudiantes.apellidose','estudiantes.direccion','estudiantes.fnac','estudiantes.sexo',
+               'padres.nombres','padres.apellidos','padres.cedula','padres.telefono','padres.parentesco','padres.lugar_trabajo','padres.ocupacion')
+            ->where('estudiantes.id','=',$id)
+            ->get(); 
+
+            return view('vistas.matricula.form.perfil',["estudiantes"=>$estudiantes]);
     }
 
     /**
@@ -133,8 +175,33 @@ class matriculaController extends Controller
      */
     public function edit($id)
     {
-        
-    }
+        // $matriculas = DB::table('matriculas')
+        //     ->join('estudiantes','estudiantes.id','=','matriculas.idestudiantes')
+        //     ->select('matriculas.id','estudiantes.nombrese','estudiantes.apellidose')
+        //     ->where('estudiantes.id','=',$id)
+        //     ->get();
+
+        //     $matriculas = matriculas::findOrFail($id);
+
+
+        //     $idmatricula=DB::table('matriculas')
+        //         ->select('id')
+        //         ->where('id','=',$id)
+        //         ->get();    
+        //     foreach ($idmatricula as $idmat)
+        //     {
+        //         $idm = $idmat->id;
+        //     }
+
+        //  $calificaciones = DB::table('calificaciones')
+        //     ->join('asignaturas','asignaturas.idasignaturas','=','calificaciones.idasignaturas')
+        //     ->select('calificaciones.idmatriculas','calificaciones.id','calificaciones.IP','calificaciones.IIP','calificaciones.NS','calificaciones.IIIP','calificaciones.IVP','calificaciones.NSS','calificaciones.NF','asignaturas.idasignaturas')
+        //     ->where('calificaciones.idmatriculas','=',$idm)
+        //     ->get();
+        //     // dd($matriculas,$calificaciones );
+           
+        // return view('vistas.notas.form.notas_personales',["matriculas"=>$matriculas,"calificaciones"=>$calificaciones]);
+    } 
 
     /**
      * Update the specified resource in storage.
@@ -145,7 +212,7 @@ class matriculaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        $matriculas = matriculas::findOrFail($id);
     }
 
     /**

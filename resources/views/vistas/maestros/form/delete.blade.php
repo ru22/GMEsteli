@@ -1,0 +1,1 @@
+<p>Confirme si decea eliminar al maestros: {{$maes->nombres." ".$maes->apellidos}}</p>

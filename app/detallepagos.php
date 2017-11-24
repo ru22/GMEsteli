@@ -21,4 +21,18 @@ class detallepagos extends Model
      public function pagos(){
         return $this->belongsTo(pagos::class);
     }
+
+    public function delanios()
+     {
+        return $this->hasOne('App\id','id','idannios');
+     }
+     public function scopebusqueda($query ,$idannios, $dato=""){
+
+        $resultado=$query->where("detallepagos.idannios","=",$idannios)
+        ->where(function($q) use($idannios,$dato){
+             $q->where('periodo','like','%'.$dato.'%');
+            });
+
+         return $resultado; 
+       } 
 }

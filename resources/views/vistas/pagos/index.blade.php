@@ -1,30 +1,15 @@
 @extends('layouts.admin')
 @section('content')
-   <div class="row">
-    <div class="col-md-12">
-      <div class="box">
-        <div class="box-header with-border">
-          <h3 class="box-title">Control de pagos Aranceles</h3>
-          <div class="box-tools pull-right">
-              <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-              <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+<div class="container-fluid">
+    <div class="row container-fluid">
+      <section>
+        <div class="wizard container-fluid">
+          <div class="wizard-inner"><br>
+               @include('vistas.pagos.form.listaestudiantes')  
           </div>
         </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-           <div class="row">
-              <div class="col-md-12">
-                <!--Contenido-->
-                
-               @include('vistas.pagos.form.lista')
-                <!--Fin Contenido-->
-              </div>
-            </div>      
-          </div> 
-        </div><!-- /.row -->
-      </div><!-- /.box-body -->  
-    </div><!-- /.box -->
-  </div><!-- /.col --> 
-  
+      </section>
+    </div>
+</div>
 @stop
-   
+ 

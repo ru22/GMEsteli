@@ -15,12 +15,14 @@ class CreateEstudiantesTable extends Migration
     {
         Schema::create('estudiantes', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('codigo');
             $table->string('nombrese');
             $table->string('apellidose');
             $table->string('procedencia');
             $table->string('fnac');
             $table->string('sexo');
             $table->string('direccion');
+            $table->string('estado');
             $table->integer('padres_id')->unsigned();
             $table->foreign('padres_id')->references('id')->on('padres');
             $table->timestamps();
